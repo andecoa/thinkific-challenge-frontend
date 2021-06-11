@@ -5,8 +5,8 @@ import UserIntegerUI from "./UserIntegerUI";
 export default function UserInteger() {
   const { getAccessTokenWithPopup } = useAuth0();
   const opts = {
-    audience: "https://thinkific-backend.aldecoa.xyz",
-    scope: "read:userInteger write:userInteger",
+    audience: process.env.NEXT_PUBLIC_AUTH0_API_AUDIENCE,
+    scope: process.env.NEXT_PUBLIC_AUTH0_API_AUDIENCE_SCOPES,
   };
 
   const { loading, error, refresh, accessToken } = useApi(opts);
