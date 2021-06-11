@@ -6,11 +6,14 @@ export default function UserIntegerUI({ accessToken }) {
 
   useEffect(() => {
     const getUserInteger = async () => {
-      const res = await fetch("http://localhost:8001/v1/current", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_RESOURCE_SERVER}/current`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       const data = await res.json();
       setUserInteger(data.value);
     };
@@ -18,7 +21,7 @@ export default function UserIntegerUI({ accessToken }) {
   }, [accessToken]);
 
   const increment = async () => {
-    const res = await fetch("http://localhost:8001/v1/next", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_RESOURCE_SERVER}/next`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -29,14 +32,17 @@ export default function UserIntegerUI({ accessToken }) {
 
   const resetInteger = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:8001/v1/current", {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ newInteger: parseInt(newInteger, 10) }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_RESOURCE_SERVER}/current`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newInteger: parseInt(newInteger, 10) }),
+      }
+    );
     const data = await res.json();
     setUserInteger(data.value);
   };
